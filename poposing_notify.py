@@ -28,7 +28,7 @@ def callback():
     return 'OK'
 
 
-# 判斷是否開台
+# 推播公告開台
 def notification(channel_title, channel_game, channel_streamer):
     line_bot_api.broadcast(TextSendMessage(
         text='開台摟\n開台連結：https://www.twitch.tv/{}\n標題：{}\n遊戲：{}'.format(channel_streamer, channel_title,

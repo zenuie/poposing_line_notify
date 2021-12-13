@@ -6,7 +6,7 @@ from time import sleep
 big_clock = BackgroundScheduler()
 sched = BlockingScheduler()
 
-
+# 每5秒確認一次是否開台
 @sched.scheduled_job('interval', minutes=0.083)
 def scan_channel():
     # twitch API設定
@@ -21,11 +21,15 @@ def scan_channel():
         channel_game = channel_info[0].get('game_name')
         channel_streamer = channel_info[0].get('user_login')
         print('開台了')
+        # poposing notify.py 內之函數送出訊息說開台了
         notification(channel_title, channel_game, channel_streamer)
+        # 暫停搜尋是否開台
         sched.pause()
+        # 確認是否關台
         while True:
             if not channel_info:
                 print('關台了')
+                # 確認關台 恢復搜尋是否開台
                 sched.resume()
 
 
